@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U2-02 · Operaciones a nivel de bits · IFCD0062</title>
+<link rel="stylesheet" href="../estilo.css">
+<style>
+.fila{display:flex;align-items:center;gap:.6em;margin:.3em 0;font-family:monospace;font-size:1.05em}
+.et{width:9em;text-align:right;font-family:sans-serif}
+.b{display:inline-block;width:1.6em;height:1.6em;line-height:1.6em;text-align:center;border:1px solid #888;cursor:pointer;background:#fff}
+.b.on{background:#1f4e79;color:#fff}
+.res .b{cursor:default}
+.ctl{margin:.8em 0}
+.perm{font-family:monospace;font-size:1.2em}
+</style>
+</head>
+<body>
+<header><div class="cod">IFCD0062 · Unidad 2 · U2-02 · Explora</div>
+<h1>Operaciones a nivel de bits</h1></header>
+<main>
+<p>Pulsa los bits de <code>a</code> y <code>b</code> para cambiarlos (8 bits, de 0 a 255) y elige
+una operación, como en el apartado 2.4 del libro. Debajo, el resultado en binario, en decimal y
+como permisos de Unix de los tres últimos bits (r = 4, w = 2, x = 1).</p>
+<div id="a" class="fila"></div>
+<div id="b" class="fila"></div>
+<div class="ctl">Operación:
+<select id="op">
+<option value="and">a &amp; b (y)</option><option value="or">a | b (o)</option>
+<option value="xor">a ^ b (o exclusivo)</option><option value="nota">~a &amp; 255 (no, en 8 bits)</option>
+<option value="shl">a &lt;&lt; 1 (desplazar a la izquierda)</option><option value="shr">a &gt;&gt; 1 (desplazar a la derecha)</option>
+</select></div>
+<div id="r" class="fila res"></div>
+<p class="perm" id="perm"></p>
+<p><strong>Prueba.</strong> Pon en <code>a</code> el permiso rw- (6) y en <code>b</code> el de escribir
+(2). ¿Qué operación quita el permiso de escribir? ¿Qué pasa con <code>a &lt;&lt; 1</code> si
+<code>a</code> vale 200?</p>
+</main>
+<footer>Recurso complementario del libro <em>Fundamentos de Programación en Python</em> (IFCD0062).</footer>
+<script>
+let A=6,B=2;
+function bitsDe(v,id,et,click){const d=document.getElementById(id);let h='<span class="et">'+et+'</span>';
+ for(let i=7;i>=0;i--)h+='<span class="b'+((v>>i)&1?' on':'')+'" data-i="'+i+'">'+((v>>i)&1)+'</span>';
+ h+='<span>= '+v+'</span><span style="color:#888">0b'+v.toString(2).padStart(8,'0')+'</span>';d.innerHTML=h;
+ if(click)d.querySelectorAll('.b').forEach(s=>s.onclick=()=>{click(+s.dataset.i)});}
+function perm(v){return (v&4?'r':'-')+(v&2?'w':'-')+(v&1?'x':'-')}
+function dibuja(){bitsDe(A,'a','a',i=>{A^=1<<i;dibuja()});bitsDe(B,'b','b',i=>{B^=1<<i;dibuja()});
+ const op=document.getElementById('op').value;
+ const r={and:A&B,or:A|B,xor:A^B,nota:(~A)&255,shl:(A<<1),shr:A>>1}[op];
+ bitsDe(r&255,'r','resultado');
+ document.getElementById('perm').textContent='permisos: a = '+perm(A)+'   b = '+perm(B)+'   resultado = '+perm(r)+
+  (r>255?'   (el resultado real es '+r+': no cabe en 8 bits)':'');}
+document.getElementById('op').onchange=dibuja;dibuja();
+</script>
+</body>
+</html>

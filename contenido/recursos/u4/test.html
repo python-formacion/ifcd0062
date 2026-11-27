@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U4-02 · Test de autoevaluación · IFCD0062</title>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body>
+<header><div class="cod">IFCD0062 · Unidad 4 · U4-02 · Comprueba</div>
+<h1>Test de la Unidad 4</h1></header>
+<main>
+<p>Diez preguntas sobre la unidad. Al corregir verás la explicación y el apartado del libro donde
+repasarla. Tus respuestas no se guardan ni se envían a ningún sitio.</p>
+<form id="f"></form>
+<button type="button" id="b">Corregir</button>
+<p id="nota" class="res"></p>
+</main>
+<footer>Recurso complementario del libro <em>Fundamentos de Programación en Python</em> (IFCD0062).</footer>
+<script>
+const P=[
+ {q:"¿Qué criterio propuso Parnas para dividir un sistema en módulos?",
+  o:["Que cada módulo oculte una decisión de diseño que pueda cambiar", "Que todos los módulos tengan el mismo tamaño", "Que haya un módulo por función", "Que cada programador escriba un módulo"],c:0,
+  e:"Es el principio de ocultación de información.",s:"4.1"},
+ {q:"¿Para qué sirve random.seed()?",
+  o:["Para que la secuencia de números aleatorios se pueda repetir", "Para generar números más aleatorios", "Para borrar los números", "Para elegir un número primo"],c:0,
+  e:"Con la misma semilla, los mismos resultados.",s:"4.1"},
+ {q:"¿Qué archivo convierte una carpeta en un paquete?",
+  o:["__init__.py", "main.py", "setup.txt", "paquete.py"],c:0,
+  e:"Se ejecuta al importar el paquete.",s:"4.2"},
+ {q:"¿Cuánto vale __name__ cuando un archivo se ejecuta directamente?",
+  o:["'__main__'", "El nombre del archivo", "None", "'programa'"],c:0,
+  e:"Al importarlo, vale el nombre del módulo.",s:"4.2"},
+ {q:"¿Qué devuelve 'Lázaro'.find('x')?",
+  o:["-1", "0", "None", "Un error"],c:0,
+  e:"find() devuelve -1 si no encuentra el texto.",s:"4.3"},
+ {q:"¿Qué diferencia hay entre lista.sort() y sorted(lista)?",
+  o:["sort() ordena la propia lista; sorted() devuelve una lista nueva", "Ninguna", "sorted() solo ordena números", "sort() devuelve una copia"],c:0,
+  e:"sort() devuelve None.",s:"4.3"},
+ {q:"¿Cómo se lee una traza de error?",
+  o:["De abajo arriba: la última línea dice qué pasó y las anteriores, dónde", "De arriba abajo, solo la primera línea", "Solo importa el número de línea", "No se puede leer"],c:0,
+  e:"La causa real puede estar en una llamada anterior.",s:"4.4"},
+ {q:"¿Cuándo se ejecuta el bloque else de un try?",
+  o:["Cuando no se ha producido ninguna excepción", "Siempre", "Cuando hay un error", "Nunca"],c:0,
+  e:"finally se ejecuta siempre.",s:"4.4"},
+ {q:"¿Para qué sirve raise?",
+  o:["Para lanzar una excepción, por ejemplo, ante datos no válidos", "Para capturar excepciones", "Para importar módulos", "Para terminar un bucle"],c:0,
+  e:"Es mejor que devolver un valor absurdo.",s:"4.4"},
+ {q:"¿Por qué no conviene un except sin tipo?",
+  o:["Porque atrapa también los errores de programación y los esconde", "Porque es más lento", "Porque no funciona", "Porque Python lo prohíbe"],c:0,
+  e:"Hay que capturar solo los errores que se saben tratar.",s:"4.4"}
+];
+P.forEach((p,i)=>{const k=(i*3+1)%4;p.o=[...p.o.slice(k),...p.o.slice(0,k)];p.c=(p.c-k+4)%4});  // reparte la respuesta correcta
+const f=document.getElementById('f');
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='preg';
+ d.innerHTML='<p>'+(i+1)+'. '+p.q+'</p>'+p.o.map((o,j)=>'<label><input type="radio" name="p'+i+'" value="'+j+'"> '+o+'</label>').join('')+'<div class="fb" id="fb'+i+'"></div>';
+ f.append(d)});
+document.getElementById('b').onclick=()=>{let ok=0;
+ P.forEach((p,i)=>{const s=f.querySelector('input[name=p'+i+']:checked');const fb=document.getElementById('fb'+i);
+  const bien=s&&+s.value===p.c;if(bien)ok++;
+  fb.innerHTML=(bien?'<span class="ok">Correcto.</span> ':'<span class="mal">'+(s?'No es correcto.':'Sin responder.')+'</span> Respuesta: '+p.o[p.c]+'. ')+p.e+' <em>Repasa el apartado '+p.s+'.</em>'});
+ document.getElementById('nota').textContent='Aciertos: '+ok+' de '+P.length;};
+</script>
+</body>
+</html>

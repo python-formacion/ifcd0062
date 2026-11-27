@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U2-04 · Test de autoevaluación · IFCD0062</title>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body>
+<header><div class="cod">IFCD0062 · Unidad 2 · U2-04 · Comprueba</div>
+<h1>Test de la Unidad 2</h1></header>
+<main>
+<p>Diez preguntas sobre la unidad. Al corregir verás la explicación y el apartado del libro donde
+repasarla. Tus respuestas no se guardan ni se envían a ningún sitio.</p>
+<form id="f"></form>
+<button type="button" id="b">Corregir</button>
+<p id="nota" class="res"></p>
+</main>
+<footer>Recurso complementario del libro <em>Fundamentos de Programación en Python</em> (IFCD0062).</footer>
+<script>
+const P=[
+ {q:"¿Qué vale True and False?",
+  o:["False", "True", "None", "Un error"],c:0,
+  e:"and solo es verdadero si las dos condiciones lo son.",s:"2.1"},
+ {q:"¿Qué es la evaluación en cortocircuito?",
+  o:["Dejar de evaluar una condición compuesta en cuanto se conoce el resultado", "Un error eléctrico", "Evaluar siempre todas las condiciones", "Un tipo de bucle"],c:0,
+  e:"En False and ..., la segunda parte no se evalúa.",s:"2.1"},
+ {q:"¿Qué calificación devuelve calificacion(7)?",
+  o:["notable", "aprobado", "sobresaliente", "suspenso"],c:0,
+  e:"7 no es menor que 7, así que pasa al siguiente caso.",s:"2.2"},
+ {q:"¿Cuándo es preferible un bucle while a un for?",
+  o:["Cuando no se sabe de antemano cuántas vueltas habrá que dar", "Siempre", "Para recorrer una lista", "Nunca"],c:0,
+  e:"Como en la conjetura de Collatz.",s:"2.3"},
+ {q:"¿Qué números genera range(1, 5)?",
+  o:["1, 2, 3 y 4", "1, 2, 3, 4 y 5", "0, 1, 2, 3 y 4", "Solo el 1 y el 5"],c:0,
+  e:"El final no se incluye.",s:"2.3"},
+ {q:"¿Qué hace break dentro de un bucle?",
+  o:["Lo termina inmediatamente", "Salta a la siguiente vuelta", "Reinicia el bucle", "Detiene el programa"],c:0,
+  e:"continue salta a la siguiente vuelta.",s:"2.3"},
+ {q:"¿Qué permisos representa la cifra 5 en un modo como 755?",
+  o:["r-x (leer y ejecutar)", "rw- (leer y escribir)", "rwx (todos)", "-w- (escribir)"],c:0,
+  e:"5 = 4 + 1: leer y ejecutar.",s:"2.4"},
+ {q:"¿Qué vale 5 << 1?",
+  o:["10", "2", "6", "4"],c:0,
+  e:"Desplazar un bit a la izquierda multiplica por 2.",s:"2.4"},
+ {q:"Tras otra = compra; compra.append('sal'), ¿qué contiene otra?",
+  o:["También 'sal', porque es el mismo objeto", "La lista sin 'sal'", "Una lista vacía", "Un error"],c:0,
+  e:"La asignación crea un alias, no una copia.",s:"2.5"},
+ {q:"¿Por qué [[0] * 3] * 3 no crea una matriz correcta?",
+  o:["Porque repite tres veces la misma fila", "Porque da un error", "Porque crea una lista de números", "Sí la crea correctamente"],c:0,
+  e:"Hay que crear cada fila en una vuelta del bucle.",s:"2.5"}
+];
+P.forEach((p,i)=>{const k=(i*3+1)%4;p.o=[...p.o.slice(k),...p.o.slice(0,k)];p.c=(p.c-k+4)%4});  // reparte la respuesta correcta
+const f=document.getElementById('f');
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='preg';
+ d.innerHTML='<p>'+(i+1)+'. '+p.q+'</p>'+p.o.map((o,j)=>'<label><input type="radio" name="p'+i+'" value="'+j+'"> '+o+'</label>').join('')+'<div class="fb" id="fb'+i+'"></div>';
+ f.append(d)});
+document.getElementById('b').onclick=()=>{let ok=0;
+ P.forEach((p,i)=>{const s=f.querySelector('input[name=p'+i+']:checked');const fb=document.getElementById('fb'+i);
+  const bien=s&&+s.value===p.c;if(bien)ok++;
+  fb.innerHTML=(bien?'<span class="ok">Correcto.</span> ':'<span class="mal">'+(s?'No es correcto.':'Sin responder.')+'</span> Respuesta: '+p.o[p.c]+'. ')+p.e+' <em>Repasa el apartado '+p.s+'.</em>'});
+ document.getElementById('nota').textContent='Aciertos: '+ok+' de '+P.length;};
+</script>
+</body>
+</html>

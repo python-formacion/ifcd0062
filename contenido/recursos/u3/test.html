@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U3-02 · Test de autoevaluación · IFCD0062</title>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body>
+<header><div class="cod">IFCD0062 · Unidad 3 · U3-02 · Comprueba</div>
+<h1>Test de la Unidad 3</h1></header>
+<main>
+<p>Diez preguntas sobre la unidad. Al corregir verás la explicación y el apartado del libro donde
+repasarla. Tus respuestas no se guardan ni se envían a ningún sitio.</p>
+<form id="f"></form>
+<button type="button" id="b">Corregir</button>
+<p id="nota" class="res"></p>
+</main>
+<footer>Recurso complementario del libro <em>Fundamentos de Programación en Python</em> (IFCD0062).</footer>
+<script>
+const P=[
+ {q:"¿Qué devuelve una función sin return?",
+  o:["None", "0", "Una cadena vacía", "Un error"],c:0,
+  e:"Toda función devuelve algo; si no se indica, None.",s:"3.1"},
+ {q:"Si una función devuelve 'return a, b, c', ¿qué devuelve realmente?",
+  o:["Una tupla", "Una lista", "Tres objetos separados", "Un diccionario"],c:0,
+  e:"La tupla se puede desempaquetar en tres variables.",s:"3.1"},
+ {q:"¿Qué recoge el parámetro *args?",
+  o:["Cualquier cantidad de argumentos por posición, en una tupla", "Los argumentos por nombre", "Solo dos argumentos", "Los valores por defecto"],c:0,
+  e:"**kwargs recoge los argumentos por nombre en un diccionario.",s:"3.1"},
+ {q:"¿Por qué es un error usar lista=[] como valor por defecto?",
+  o:["Porque la lista se crea una sola vez y se comparte entre llamadas", "Porque da un error de sintaxis", "Porque las listas no pueden ser parámetros", "No es un error"],c:0,
+  e:"La solución es usar None y crear la lista dentro.",s:"3.1"},
+ {q:"¿Qué pasa con una variable creada dentro de una función al terminar esta?",
+  o:["Deja de existir: es local", "Pasa a ser global", "Se guarda en un archivo", "Se convierte en tupla"],c:0,
+  e:"Para modificar una global hay que declararla con global.",s:"3.1"},
+ {q:"¿Para qué sirve assert?",
+  o:["Para comprobar que una condición se cumple y detener el programa si no", "Para imprimir resultados", "Para definir funciones", "Para importar módulos"],c:0,
+  e:"Es la forma más sencilla de probar funciones.",s:"3.1"},
+ {q:"¿Qué distingue a una tupla de una lista?",
+  o:["Es inmutable", "Solo admite números", "Es más lenta", "No admite índices"],c:0,
+  e:"Por eso puede ser clave de un diccionario.",s:"3.2"},
+ {q:"¿Qué devuelve d.get('x', 0) si la clave 'x' no existe?",
+  o:["0", "None", "Un KeyError", "'x'"],c:0,
+  e:"get() permite indicar un valor por defecto.",s:"3.3"},
+ {q:"¿Cuántas palabras distintas tiene el Lazarillo según el recuento del libro?",
+  o:["3 718", "20 073", "2 275", "1 144"],c:0,
+  e:"2 275 aparecen una sola vez.",s:"3.4"},
+ {q:"¿Por qué el recuento de 'escudero' en el tratado tercero es bajo?",
+  o:["Porque el texto se refiere a él a menudo como 'mi amo'", "Porque el escudero no aparece", "Por un error del programa", "Porque está en otro tratado"],c:0,
+  e:"Un recuento automático solo cuenta palabras exactas.",s:"3.4"}
+];
+P.forEach((p,i)=>{const k=(i*3+1)%4;p.o=[...p.o.slice(k),...p.o.slice(0,k)];p.c=(p.c-k+4)%4});  // reparte la respuesta correcta
+const f=document.getElementById('f');
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='preg';
+ d.innerHTML='<p>'+(i+1)+'. '+p.q+'</p>'+p.o.map((o,j)=>'<label><input type="radio" name="p'+i+'" value="'+j+'"> '+o+'</label>').join('')+'<div class="fb" id="fb'+i+'"></div>';
+ f.append(d)});
+document.getElementById('b').onclick=()=>{let ok=0;
+ P.forEach((p,i)=>{const s=f.querySelector('input[name=p'+i+']:checked');const fb=document.getElementById('fb'+i);
+  const bien=s&&+s.value===p.c;if(bien)ok++;
+  fb.innerHTML=(bien?'<span class="ok">Correcto.</span> ':'<span class="mal">'+(s?'No es correcto.':'Sin responder.')+'</span> Respuesta: '+p.o[p.c]+'. ')+p.e+' <em>Repasa el apartado '+p.s+'.</em>'});
+ document.getElementById('nota').textContent='Aciertos: '+ok+' de '+P.length;};
+</script>
+</body>
+</html>

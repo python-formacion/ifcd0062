@@ -1,0 +1,6 @@
+jupyterlite-core==0.8.7
+jupyterlite-pyodide-kernel==0.8.7
+nbconvert==7.17.2
+ipykernel==7.4.0
+jupyter_server==2.21.1
+jupyterlab_server==2.28.1

@@ -1,0 +1,13 @@
+codigo;tipo;titulo;destino
+u1-01;ejecuta;Primeros pasos: tipos, operadores y formato;lab/notebooks/index.html?path=u1/primeros_pasos.ipynb
+u1-02;compruebalo;Test de la unidad 1;recursos/u1/test.html
+u2-01;explora;Un programa paso a paso: variables y bucles;recursos/u2/paso.html
+u2-02;explora;Operaciones a nivel de bits;recursos/u2/bits.html
+u2-03;ejecuta;Condiciones, bucles, bits y listas;lab/notebooks/index.html?path=u2/condiciones_bucles_listas.ipynb
+u2-04;compruebalo;Test de la unidad 2;recursos/u2/test.html
+u3-01;ejecuta;Funciones, tuplas, diccionarios y el Lazarillo;lab/notebooks/index.html?path=u3/funciones_diccionarios.ipynb
+u3-02;compruebalo;Test de la unidad 3;recursos/u3/test.html
+u4-01;ejecuta;Módulos, paquetes, métodos y excepciones;lab/notebooks/index.html?path=u4/modulos_excepciones.ipynb
+u4-02;compruebalo;Test de la unidad 4;recursos/u4/test.html
+u5-01;ejecuta;Clases, archivos y el proyecto de la biblioteca;lab/notebooks/index.html?path=u5/clases_archivos.ipynb
+u5-02;compruebalo;Test de la unidad 5;recursos/u5/test.html

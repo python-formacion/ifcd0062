@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U2-01 · Un programa paso a paso · IFCD0062</title>
+<link rel="stylesheet" href="../estilo.css">
+<style>
+.ctl{margin:.6em 0}.ctl label{margin-right:1em}
+.paneles{display:flex;flex-wrap:wrap;gap:1.2em;align-items:flex-start}
+pre.cod{background:#fff;border:1px solid #ccc;padding:.5em 0;min-width:22em;font-size:.95em;line-height:1.5}
+pre.cod span{display:block;padding:0 .8em}
+pre.cod span.act{background:#fde9a6}
+pre.cod span .n{color:#999;display:inline-block;width:1.8em}
+table.vars{border-collapse:collapse;min-width:14em;background:#fff}
+table.vars td,table.vars th{border:1px solid #ccc;padding:.25em .6em;font-family:monospace;text-align:left}
+td.cambio{background:#d9f2d9}
+#sal{font-family:monospace;background:#fff;border:1px solid #ccc;padding:.4em .6em;min-height:1.5em}
+</style>
+</head>
+<body>
+<header><div class="cod">IFCD0062 · Unidad 2 · U2-01 · Explora</div>
+<h1>Un programa paso a paso</h1></header>
+<main>
+<p>Elige un programa y avanza paso a paso. La línea resaltada es la que Python <strong>va a
+ejecutar</strong>; la tabla muestra el valor de cada variable en ese momento, y en verde las que
+acaban de cambiar. Los pasos se obtuvieron ejecutando los programas con Python, como hace la
+herramienta Python Tutor (Guo, 2013) que cita el libro.</p>
+<div class="ctl">
+<label>Programa: <select id="prog"></select></label>
+<button id="ini">« Inicio</button> <button id="ant">‹ Anterior</button>
+<button id="sig">Siguiente ›</button> <button id="fin">Final »</button>
+<strong id="paso"></strong>
+</div>
+<div class="paneles">
+<pre class="cod" id="cod"></pre>
+<div><table class="vars" id="vars"></table>
+<p><strong>Salida:</strong></p><div id="sal"></div></div>
+</div>
+<p><strong>Prueba.</strong> En «Collatz desde 6», ¿cuántas veces se ejecuta la línea 5 y
+cuántas la línea 7? En «Buscar con break», ¿por qué el programa nunca llega a mirar el
+valor 20?</p>
+</main>
+<footer>Recurso complementario del libro <em>Fundamentos de Programación en Python</em> (IFCD0062).</footer>
+<script>
+const D={"Acumulador (suma de 1 a 5)": {"codigo": "total = 0\nfor k in range(1, 6):\n    total += k\nprint(total)", "pasos": [{"linea": 1, "vars": {}, "salida": []}, {"linea": 2, "vars": {"total": "0"}, "salida": []}, {"linea": 3, "vars": {"total": "0", "k": "1"}, "salida": []}, {"linea": 2, "vars": {"total": "1", "k": "1"}, "salida": []}, {"linea": 3, "vars": {"total": "1", "k": "2"}, "salida": []}, {"linea": 2, "vars": {"total": "3", "k": "2"}, "salida": []}, {"linea": 3, "vars": {"total": "3", "k": "3"}, "salida": []}, {"linea": 2, "vars": {"total": "6", "k": "3"}, "salida": []}, {"linea": 3, "vars": {"total": "6", "k": "4"}, "salida": []}, {"linea": 2, "vars": {"total": "10", "k": "4"}, "salida": []}, {"linea": 3, "vars": {"total": "10", "k": "5"}, "salida": []}, {"linea": 2, "vars": {"total": "15", "k": "5"}, "salida": []}, {"linea": 4, "vars": {"total": "15", "k": "5"}, "salida": []}, {"linea": 0, "vars": {"total": "15", "k": "5"}, "salida": ["15"]}]}, "Collatz desde 6": {"codigo": "n = 6\npasos = 0\nwhile n != 1:\n    if n % 2 == 0:\n        n = n // 2\n    else:\n        n = 3 * n + 1\n    pasos += 1\nprint(pasos)", "pasos": [{"linea": 1, "vars": {}, "salida": []}, {"linea": 2, "vars": {"n": "6"}, "salida": []}, {"linea": 3, "vars": {"n": "6", "pasos": "0"}, "salida": []}, {"linea": 4, "vars": {"n": "6", "pasos": "0"}, "salida": []}, {"linea": 5, "vars": {"n": "6", "pasos": "0"}, "salida": []}, {"linea": 8, "vars": {"n": "3", "pasos": "0"}, "salida": []}, {"linea": 3, "vars": {"n": "3", "pasos": "1"}, "salida": []}, {"linea": 4, "vars": {"n": "3", "pasos": "1"}, "salida": []}, {"linea": 7, "vars": {"n": "3", "pasos": "1"}, "salida": []}, {"linea": 8, "vars": {"n": "10", "pasos": "1"}, "salida": []}, {"linea": 3, "vars": {"n": "10", "pasos": "2"}, "salida": []}, {"linea": 4, "vars": {"n": "10", "pasos": "2"}, "salida": []}, {"linea": 5, "vars": {"n": "10", "pasos": "2"}, "salida": []}, {"linea": 8, "vars": {"n": "5", "pasos": "2"}, "salida": []}, {"linea": 3, "vars": {"n": "5", "pasos": "3"}, "salida": []}, {"linea": 4, "vars": {"n": "5", "pasos": "3"}, "salida": []}, {"linea": 7, "vars": {"n": "5", "pasos": "3"}, "salida": []}, {"linea": 8, "vars": {"n": "16", "pasos": "3"}, "salida": []}, {"linea": 3, "vars": {"n": "16", "pasos": "4"}, "salida": []}, {"linea": 4, "vars": {"n": "16", "pasos": "4"}, "salida": []}, {"linea": 5, "vars": {"n": "16", "pasos": "4"}, "salida": []}, {"linea": 8, "vars": {"n": "8", "pasos": "4"}, "salida": []}, {"linea": 3, "vars": {"n": "8", "pasos": "5"}, "salida": []}, {"linea": 4, "vars": {"n": "8", "pasos": "5"}, "salida": []}, {"linea": 5, "vars": {"n": "8", "pasos": "5"}, "salida": []}, {"linea": 8, "vars": {"n": "4", "pasos": "5"}, "salida": []}, {"linea": 3, "vars": {"n": "4", "pasos": "6"}, "salida": []}, {"linea": 4, "vars": {"n": "4", "pasos": "6"}, "salida": []}, {"linea": 5, "vars": {"n": "4", "pasos": "6"}, "salida": []}, {"linea": 8, "vars": {"n": "2", "pasos": "6"}, "salida": []}, {"linea": 3, "vars": {"n": "2", "pasos": "7"}, "salida": []}, {"linea": 4, "vars": {"n": "2", "pasos": "7"}, "salida": []}, {"linea": 5, "vars": {"n": "2", "pasos": "7"}, "salida": []}, {"linea": 8, "vars": {"n": "1", "pasos": "7"}, "salida": []}, {"linea": 3, "vars": {"n": "1", "pasos": "8"}, "salida": []}, {"linea": 9, "vars": {"n": "1", "pasos": "8"}, "salida": []}, {"linea": 0, "vars": {"n": "1", "pasos": "8"}, "salida": ["8"]}]}, "Máximo de una lista": {"codigo": "datos = [4, 17, 9, 23, 8]\nmayor = datos[0]\nfor x in datos:\n    if x > mayor:\n        mayor = x\nprint(mayor)", "pasos": [{"linea": 1, "vars": {}, "salida": []}, {"linea": 2, "vars": {"datos": "[4, 17, 9, 23, 8]"}, "salida": []}, {"linea": 3, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "4"}, "salida": []}, {"linea": 4, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "4", "x": "4"}, "salida": []}, {"linea": 3, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "4", "x": "4"}, "salida": []}, {"linea": 4, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "4", "x": "17"}, "salida": []}, {"linea": 5, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "4", "x": "17"}, "salida": []}, {"linea": 3, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "17", "x": "17"}, "salida": []}, {"linea": 4, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "17", "x": "9"}, "salida": []}, {"linea": 3, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "17", "x": "9"}, "salida": []}, {"linea": 4, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "17", "x": "23"}, "salida": []}, {"linea": 5, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "17", "x": "23"}, "salida": []}, {"linea": 3, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "23", "x": "23"}, "salida": []}, {"linea": 4, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "23", "x": "8"}, "salida": []}, {"linea": 3, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "23", "x": "8"}, "salida": []}, {"linea": 6, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "23", "x": "8"}, "salida": []}, {"linea": 0, "vars": {"datos": "[4, 17, 9, 23, 8]", "mayor": "23", "x": "8"}, "salida": ["23"]}]}, "Buscar con break": {"codigo": "lista = [3, 8, 12, 5, 20]\nencontrado = None\nfor i, v in enumerate(lista):\n    if v > 10:\n        encontrado = i\n        break\nprint(encontrado)", "pasos": [{"linea": 1, "vars": {}, "salida": []}, {"linea": 2, "vars": {"lista": "[3, 8, 12, 5, 20]"}, "salida": []}, {"linea": 3, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None"}, "salida": []}, {"linea": 4, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None", "i": "0", "v": "3"}, "salida": []}, {"linea": 3, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None", "i": "0", "v": "3"}, "salida": []}, {"linea": 4, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None", "i": "1", "v": "8"}, "salida": []}, {"linea": 3, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None", "i": "1", "v": "8"}, "salida": []}, {"linea": 4, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None", "i": "2", "v": "12"}, "salida": []}, {"linea": 5, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "None", "i": "2", "v": "12"}, "salida": []}, {"linea": 6, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "2", "i": "2", "v": "12"}, "salida": []}, {"linea": 7, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "2", "i": "2", "v": "12"}, "salida": []}, {"linea": 0, "vars": {"lista": "[3, 8, 12, 5, 20]", "encontrado": "2", "i": "2", "v": "12"}, "salida": ["2"]}]}};
+const sel=document.getElementById('prog');let k=0;
+Object.keys(D).forEach(n=>{const o=document.createElement('option');o.textContent=n;sel.append(o)});
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function dibuja(){const P=D[sel.value],p=P.pasos[k],prev=k?P.pasos[k-1]:{vars:{}};
+ document.getElementById('cod').innerHTML=P.codigo.split('\n').map((l,i)=>
+  '<span'+(i+1===p.linea?' class="act"':'')+'><span class="n">'+(i+1)+'</span>'+esc(l)+'</span>').join('');
+ document.getElementById('paso').textContent='Paso '+(k+1)+' de '+P.pasos.length+(p.linea?'':' · programa terminado');
+ let h='<tr><th>variable</th><th>valor</th></tr>';
+ Object.entries(p.vars).forEach(([n,v])=>{h+='<tr><td>'+n+'</td><td'+(prev.vars[n]!==v?' class="cambio"':'')+'>'+esc(v)+'</td></tr>'});
+ document.getElementById('vars').innerHTML=h;
+ document.getElementById('sal').textContent=p.salida.join('\n');}
+const ir=n=>{const N=D[sel.value].pasos.length;k=Math.max(0,Math.min(N-1,n));dibuja()};
+document.getElementById('ini').onclick=()=>ir(0);
+document.getElementById('ant').onclick=()=>ir(k-1);
+document.getElementById('sig').onclick=()=>ir(k+1);
+document.getElementById('fin').onclick=()=>ir(1e9);
+sel.onchange=()=>ir(0);dibuja();
+</script>
+</body>
+</html>

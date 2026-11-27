@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U1-02 · Test de autoevaluación · IFCD0062</title>
+<link rel="stylesheet" href="../estilo.css">
+</head>
+<body>
+<header><div class="cod">IFCD0062 · Unidad 1 · U1-02 · Comprueba</div>
+<h1>Test de la Unidad 1</h1></header>
+<main>
+<p>Doce preguntas sobre la unidad. Al corregir verás la explicación y el apartado del libro donde
+repasarla. Tus respuestas no se guardan ni se envían a ningún sitio.</p>
+<form id="f"></form>
+<button type="button" id="b">Corregir</button>
+<p id="nota" class="res"></p>
+</main>
+<footer>Recurso complementario del libro <em>Fundamentos de Programación en Python</em> (IFCD0062).</footer>
+<script>
+const P=[
+ {q:"¿Qué es un algoritmo?",
+  o:["Una secuencia finita de pasos precisos que resuelve un problema", "Un lenguaje de programación", "Un programa ya compilado", "Un tipo de dato"],c:0,
+  e:"Un programa es un algoritmo escrito en un lenguaje de programación.",s:"1.1"},
+ {q:"¿Qué tres estructuras bastan para expresar cualquier algoritmo, según Böhm y Jacopini?",
+  o:["Secuencia, selección e iteración", "Variables, funciones y clases", "Entrada, proceso y salida", "Listas, tuplas y diccionarios"],c:0,
+  e:"Es la base de la programación estructurada.",s:"1.1"},
+ {q:"¿Qué hace CPython antes de ejecutar un programa?",
+  o:["Lo traduce a código de bytes, que ejecuta una máquina virtual", "Lo traduce a código máquina y genera un ejecutable", "Lo ejecuta tal cual, letra a letra", "Lo envía a un servidor"],c:0,
+  e:"El módulo dis muestra ese código de bytes.",s:"1.2"},
+ {q:"¿Por qué sum(range(n)) es más rápida que un bucle escrito en Python?",
+  o:["Porque sum() está escrita en C, un lenguaje compilado", "Porque usa menos memoria", "Porque se salta números", "Porque se ejecuta en otro ordenador"],c:0,
+  e:"Interpretar cada vuelta del bucle tiene un coste.",s:"1.2"},
+ {q:"¿Qué es un cuaderno Jupyter?",
+  o:["Un documento que mezcla texto, código ejecutable y resultados", "Un editor de texto sin formato", "Un compilador de Python", "Una biblioteca de gráficos"],c:0,
+  e:"Los recursos del libro son cuadernos que se ejecutan en el navegador.",s:"1.3"},
+ {q:"¿Qué tipo tiene el valor 19.95?",
+  o:["float", "int", "str", "bool"],c:0,
+  e:"Los números con decimales son de coma flotante.",s:"1.4"},
+ {q:"¿Por qué 0.1 + 0.2 no es exactamente 0.3?",
+  o:["Porque los decimales se guardan en binario y 0,1 no tiene representación exacta", "Por un error de Python", "Porque Python redondea mal", "Porque los enteros tienen límite"],c:0,
+  e:"Es una propiedad de la norma IEEE 754, no un fallo.",s:"1.4"},
+ {q:"¿Qué devuelve int(9.99)?",
+  o:["9", "10", "9.99", "Un error"],c:0,
+  e:"int() corta los decimales, no redondea.",s:"1.4"},
+ {q:"¿Cuánto vale 7 // 2?",
+  o:["3", "3.5", "1", "4"],c:0,
+  e:"// es la división entera; % da el resto (1).",s:"1.5"},
+ {q:"¿Qué tipo devuelve siempre input()?",
+  o:["Una cadena (str)", "Un número", "El tipo de lo que se escriba", "Un booleano"],c:0,
+  e:"Si se necesita un número, hay que convertirlo con int() o float().",s:"1.6"},
+ {q:"¿Qué muestra f'{3.14159:.2f}'?",
+  o:["3.14", "3.1", "3.14159", "3"],c:0,
+  e:".2f indica dos decimales.",s:"1.6"},
+ {q:"¿Qué tipo de error es escribir preico en lugar de precio?",
+  o:["NameError", "SyntaxError", "TypeError", "ValueError"],c:0,
+  e:"Python no conoce el nombre mal escrito.",s:"1.3"}
+];
+P.forEach((p,i)=>{const k=(i*3+1)%4;p.o=[...p.o.slice(k),...p.o.slice(0,k)];p.c=(p.c-k+4)%4});  // reparte la respuesta correcta
+const f=document.getElementById('f');
+P.forEach((p,i)=>{const d=document.createElement('div');d.className='preg';
+ d.innerHTML='<p>'+(i+1)+'. '+p.q+'</p>'+p.o.map((o,j)=>'<label><input type="radio" name="p'+i+'" value="'+j+'"> '+o+'</label>').join('')+'<div class="fb" id="fb'+i+'"></div>';
+ f.append(d)});
+document.getElementById('b').onclick=()=>{let ok=0;
+ P.forEach((p,i)=>{const s=f.querySelector('input[name=p'+i+']:checked');const fb=document.getElementById('fb'+i);
+  const bien=s&&+s.value===p.c;if(bien)ok++;
+  fb.innerHTML=(bien?'<span class="ok">Correcto.</span> ':'<span class="mal">'+(s?'No es correcto.':'Sin responder.')+'</span> Respuesta: '+p.o[p.c]+'. ')+p.e+' <em>Repasa el apartado '+p.s+'.</em>'});
+ document.getElementById('nota').textContent='Aciertos: '+ok+' de '+P.length;};
+</script>
+</body>
+</html>
